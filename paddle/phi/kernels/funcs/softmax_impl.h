@@ -250,9 +250,6 @@ class SoftmaxFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     !defined(PADDLE_WITH_PPC)
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
-#else
-    if (false) {
-#endif
       const T* in_data = X->data<T>();
       T* out_data = Y->data<T>();
       for (int bs = 0; bs < batch_size; ++bs) {
@@ -273,7 +270,9 @@ class SoftmaxFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
         in_data += num_classes;
         out_data += num_classes;
       }
-    } else {
+    } else
+#endif
+    {
       SoftmaxEigen<DeviceContext, T>()(context, axis_dim, X, Y);
     }
   }
@@ -412,9 +411,6 @@ class SoftmaxGradFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     !defined(PADDLE_WITH_PPC)
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
-#else
-    if (false) {
-#endif
       const T* out_data = y->data<T>();
       const T* out_grad = y_grad->data<T>();
       T* in_grad = x_grad->data<T>();
@@ -431,7 +427,9 @@ class SoftmaxGradFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
         out_grad += num_classes;
         in_grad += num_classes;
       }
-    } else {
+    } else
+#endif
+    {
       SoftmaxGradEigen<DeviceContext, T>()(
           context, axis_dim, y, y_grad, x_grad);
     }
