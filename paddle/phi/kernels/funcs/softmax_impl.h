@@ -242,12 +242,11 @@ class SoftmaxFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     constexpr int kClassDim = 1;
 
     const int num_classes = in_dims[kClassDim];
-    const int batch_size = in_dims[kBatchDim];
-    const int num_remain = num_classes / axis_dim;
-
 #if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
     !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
     !defined(PADDLE_WITH_PPC)
+    const int batch_size = in_dims[kBatchDim];
+    const int num_remain = num_classes / axis_dim;
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
       const T* in_data = X->data<T>();
@@ -403,12 +402,11 @@ class SoftmaxGradFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     constexpr int kBatchDim = 0;
     constexpr int kClassDim = 1;
     const int num_classes = out_dims[kClassDim];
-    const int batch_size = out_dims[kBatchDim];
-    const int num_remain = num_classes / axis_dim;
-
 #if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
     !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
     !defined(PADDLE_WITH_PPC)
+    const int batch_size = out_dims[kBatchDim];
+    const int num_remain = num_classes / axis_dim;
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
       const T* out_data = y->data<T>();
