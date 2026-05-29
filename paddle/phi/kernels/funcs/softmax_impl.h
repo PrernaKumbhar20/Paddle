@@ -245,8 +245,14 @@ class SoftmaxFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     const int batch_size = in_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
 
+#if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
+    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
+    !defined(PADDLE_WITH_PPC)
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
+#else
+    if (false) {
+#endif
       const T* in_data = X->data<T>();
       T* out_data = Y->data<T>();
       for (int bs = 0; bs < batch_size; ++bs) {
@@ -401,8 +407,14 @@ class SoftmaxGradFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     const int batch_size = out_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
 
+#if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
+    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
+    !defined(PADDLE_WITH_PPC)
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
+#else
+    if (false) {
+#endif
       const T* out_data = y->data<T>();
       const T* out_grad = y_grad->data<T>();
       T* in_grad = x_grad->data<T>();
