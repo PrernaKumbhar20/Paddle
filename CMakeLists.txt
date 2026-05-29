@@ -321,6 +321,7 @@ option(WITH_ARM "Compile PaddlePaddle with arm support" OFF)
 option(WITH_SW "Compile PaddlePaddle with sw support" OFF)
 option(WITH_MIPS "Compile PaddlePaddle with mips support" OFF)
 option(WITH_LOONGARCH "Compile PaddlePaddle with loongarch support" OFF)
+option(WITH_PPC "Compile PaddlePaddle with PowerPC support" OFF)
 option(WITH_MUSL "Compile with musl libc instead of gblic" OFF)
 option(WITH_UNITY_BUILD "Compile with UnityBuild mode" OFF)
 option(WITH_STRIP "Strip so files of Whl packages" OFF)
@@ -698,6 +699,19 @@ if(WITH_LOONGARCH)
       OFF
       CACHE STRING "Disable MKL when compiling WITH_LOONGARCH=ON." FORCE)
   add_definitions(-DPADDLE_WITH_LOONGARCH)
+endif()
+
+if(WITH_PPC)
+  set(WITH_XBYAK
+      OFF
+      CACHE STRING "Disable XBYAK when compiling WITH_PPC=ON" FORCE)
+  set(WITH_MKL
+      OFF
+      CACHE STRING "Disable MKL when compiling WITH_PPC=ON." FORCE)
+  set(WITH_AVX
+      OFF
+      CACHE STRING "Disable AVX when compiling WITH_PPC=ON." FORCE)
+  add_definitions(-DPADDLE_WITH_PPC)
 endif()
 
 if(WITH_ONEMKL)
