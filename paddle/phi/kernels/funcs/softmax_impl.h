@@ -237,14 +237,13 @@ class SoftmaxFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
                   const int axis_dim,
                   const phi::DenseTensor* X,
                   phi::DenseTensor* Y) {
-    const auto& in_dims = X->dims();
-    constexpr int kBatchDim = 0;
-    constexpr int kClassDim = 1;
-
-    const int num_classes = in_dims[kClassDim];
 #if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
     !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
     !defined(PADDLE_WITH_PPC)
+    const auto& in_dims = X->dims();
+    constexpr int kBatchDim = 0;
+    constexpr int kClassDim = 1;
+    const int num_classes = in_dims[kClassDim];
     const int batch_size = in_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
     if (num_remain == 1 &&
@@ -398,13 +397,13 @@ class SoftmaxGradFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
                   const phi::DenseTensor* y,
                   const phi::DenseTensor* y_grad,
                   phi::DenseTensor* x_grad) {
+#if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
+    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
+    !defined(PADDLE_WITH_PPC)
     const auto& out_dims = y->dims();
     constexpr int kBatchDim = 0;
     constexpr int kClassDim = 1;
     const int num_classes = out_dims[kClassDim];
-#if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
-    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
-    !defined(PADDLE_WITH_PPC)
     const int batch_size = out_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
     if (num_remain == 1 &&
