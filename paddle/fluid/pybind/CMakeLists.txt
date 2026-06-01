@@ -365,6 +365,17 @@ if(WITH_PYTHON)
     target_link_libraries(eager_generator ${PYTHON_LIBRARIES})
   endif()
 
+  # Link OpenMP library if MKLML is used
+  if(WITH_MKLML AND MKLML_IOMP_LIB)
+    target_link_libraries(eager_generator ${MKLML_IOMP_LIB})
+  elseif(NOT WIN32)
+    # Link system OpenMP library (libgomp for GCC)
+    find_package(OpenMP)
+    if(OPENMP_FOUND)
+      target_link_libraries(eager_generator OpenMP::OpenMP_CXX)
+    endif()
+  endif()
+
   if(WIN32)
     set(EAGER_CODEGEN_DEPS eager_generator)
     if("${CMAKE_GENERATOR}" STREQUAL "Ninja")
