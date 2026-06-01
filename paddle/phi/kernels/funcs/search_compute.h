@@ -15,7 +15,8 @@
 #pragma once
 
 #if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
-    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH)
+    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
+    !defined(PADDLE_WITH_PPC)
 #include <immintrin.h>
 #endif
 #include <cfloat>
