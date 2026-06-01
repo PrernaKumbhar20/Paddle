@@ -82,12 +82,6 @@ endif()
 # query number of logical cores
 cmake_host_system_information(RESULT CPU_CORES QUERY NUMBER_OF_LOGICAL_CORES)
 
-# Auto-detect PowerPC architecture and enable WITH_PPC
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "ppc64|powerpc64")
-  set(WITH_PPC ON CACHE BOOL "Compile PaddlePaddle with PowerPC support" FORCE)
-  message(STATUS "Auto-detected PowerPC architecture: ${CMAKE_SYSTEM_PROCESSOR}, enabling WITH_PPC")
-endif()
-
 mark_as_advanced(HOST_SYSTEM CPU_CORES)
 
 message(
