@@ -81,6 +81,11 @@ if(WITH_ARM_BRPC)
   add_definitions(-DPADDLE_WITH_ARM_BRPC)
 endif()
 
+if(WITH_PPC)
+  message(STATUS "Compile with PowerPC support!")
+  add_definitions(-DPADDLE_WITH_PPC)
+endif()
+
 if(WITH_FLPS)
   add_definitions(-DPADDLE_WITH_FLPS)
 endif()
