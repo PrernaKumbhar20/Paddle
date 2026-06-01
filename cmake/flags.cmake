@@ -161,6 +161,7 @@ if(NOT WIN32)
       -Wno-error=ignored-attributes # Warnings in Eigen, gcc 6.3
       -Wno-error=int-in-bool-context # Warning in Eigen gcc 7.2
       -Wimplicit-fallthrough=0 # Warning in tinyformat.h
+      -Wno-psabi # Suppress GCC 5 ABI compatibility warnings
       ${fsanitize})
 
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
