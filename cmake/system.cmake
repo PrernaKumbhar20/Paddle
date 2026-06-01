@@ -82,6 +82,13 @@ endif()
 # query number of logical cores
 cmake_host_system_information(RESULT CPU_CORES QUERY NUMBER_OF_LOGICAL_CORES)
 
+# Detect PowerPC architecture
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "ppc64|powerpc64")
+  set(WITH_PPC ON)
+  add_definitions(-DPADDLE_WITH_PPC)
+  message(STATUS "Detected PowerPC architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
+
 mark_as_advanced(HOST_SYSTEM CPU_CORES)
 
 message(
