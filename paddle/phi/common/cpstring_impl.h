@@ -195,6 +195,10 @@ HOSTDEVICE static inline void *PD_Memset(void *src, int ch, size_t size) {
   return dst;
 }
 
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
+#endif
 HOSTDEVICE static inline void *PD_Memcpy(void *dst,
                                          const void *src,
                                          size_t size) {
@@ -203,6 +207,9 @@ HOSTDEVICE static inline void *PD_Memcpy(void *dst,
   }
   return dst;
 }
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
 HOSTDEVICE static inline void *PD_Malloc(size_t size) { return malloc(size); }
 
