@@ -237,13 +237,11 @@ class SoftmaxFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
                   const int axis_dim,
                   const phi::DenseTensor* X,
                   phi::DenseTensor* Y) {
+#if !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__)
     const auto& in_dims = X->dims();
     constexpr int kBatchDim = 0;
     constexpr int kClassDim = 1;
-
     const int num_classes = in_dims[kClassDim];
-
-#if !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__)
     const int batch_size = in_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
     if (num_remain == 1 &&
