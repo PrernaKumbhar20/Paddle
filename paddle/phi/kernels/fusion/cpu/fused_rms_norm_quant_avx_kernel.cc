@@ -12,7 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) &&  \
+    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
+    !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__)
 #include <immintrin.h>
+#endif
 #include <math.h>
 #include <omp.h>
 #include "paddle/phi/backends/cpu/cpu_context.h"
