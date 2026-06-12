@@ -146,7 +146,7 @@ inline void axpy(const T* x, T* y, size_t len, const T alpha) {
 #elif defined(PADDLE_WITH_ARM) || defined(PADDLE_WITH_SW) || \
     defined(PADDLE_WITH_MIPS) || defined(PADDLE_WITH_LOONGARCH)
   PADDLE_THROW(common::errors::Unimplemented("axpy is not supported"));
-#else
+#elif defined(__x86_64__) || defined(__i386__) || defined(_M_X64) || defined(_M_IX86)
   lll = len & ~SSE_CUT_LEN_MASK;
   __m128x mm_alpha = _mm_load1_px(&alpha);
   for (jjj = 0; jjj < lll; jjj += SSE_STEP_SIZE) {
@@ -176,7 +176,7 @@ inline void axpy_noadd(const T* x, T* y, size_t len, const T alpha) {
 #elif defined(PADDLE_WITH_ARM) || defined(PADDLE_WITH_SW) || \
     defined(PADDLE_WITH_MIPS) || defined(PADDLE_WITH_LOONGARCH)
   PADDLE_THROW(common::errors::Unimplemented("axpy_noadd is not supported"));
-#else
+#elif defined(__x86_64__) || defined(__i386__) || defined(_M_X64) || defined(_M_IX86)
   lll = len & ~SSE_CUT_LEN_MASK;
   __m128x mm_alpha = _mm_load1_px(&alpha);
   for (jjj = 0; jjj < lll; jjj += SSE_STEP_SIZE) {
