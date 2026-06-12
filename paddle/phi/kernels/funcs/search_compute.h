@@ -15,7 +15,8 @@
 #pragma once
 
 #if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
-    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH)
+    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
+    (defined(__x86_64__) || defined(__i386__) || defined(_M_X64) || defined(_M_IX86))
 #include <immintrin.h>
 #endif
 #include <cfloat>
@@ -101,7 +102,8 @@ void call_gemm_batched(const Context& ctx,
 }
 
 #if !defined(PADDLE_WITH_ARM) && !defined(PADDLE_WITH_SW) && \
-    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH)
+    !defined(PADDLE_WITH_MIPS) && !defined(PADDLE_WITH_LOONGARCH) && \
+    (defined(__x86_64__) || defined(__i386__) || defined(_M_X64) || defined(_M_IX86))
 
 #define __m256x __m256
 
