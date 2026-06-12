@@ -395,13 +395,13 @@ class SoftmaxGradFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
                   const phi::DenseTensor* y,
                   const phi::DenseTensor* y_grad,
                   phi::DenseTensor* x_grad) {
+#if !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__)
     const auto& out_dims = y->dims();
     constexpr int kBatchDim = 0;
     constexpr int kClassDim = 1;
     const int num_classes = out_dims[kClassDim];
     const int batch_size = out_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
-#if !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__)
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
       const T* out_data = y->data<T>();
