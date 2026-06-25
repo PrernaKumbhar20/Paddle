@@ -241,8 +241,8 @@ class SoftmaxFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     constexpr int kBatchDim = 0;
     constexpr int kClassDim = 1;
 
-    const int num_classes = in_dims[kClassDim];
 #if defined(__AVX__) && !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__)
+    const int num_classes = in_dims[kClassDim];
     const int batch_size = in_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
 
@@ -400,11 +400,11 @@ class SoftmaxGradFunctor<DeviceContext, T, enable_if_CPU<DeviceContext>> {
     const auto& out_dims = y->dims();
     constexpr int kBatchDim = 0;
     constexpr int kClassDim = 1;
-    const int num_classes = out_dims[kClassDim];
+
 #if defined(__AVX__) && !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__)
+    const int num_classes = out_dims[kClassDim];
     const int batch_size = out_dims[kBatchDim];
     const int num_remain = num_classes / axis_dim;
-
     if (num_remain == 1 &&
         phi::backends::cpu::MayIUse(phi::backends::cpu::avx)) {
       const T* out_data = y->data<T>();
