@@ -30,7 +30,9 @@
 
 #if !defined(GCC_WITHOUT_INTRINSICS) && !defined(PADDLE_WITH_ARM) && \
     !defined(PADDLE_WITH_SW) && !defined(PADDLE_WITH_MIPS) &&        \
-    !defined(_WIN32) && !defined(PADDLE_WITH_LOONGARCH)
+    !defined(_WIN32) && !defined(PADDLE_WITH_LOONGARCH) &&           \
+    !defined(__powerpc__) && !defined(__ppc__) && !defined(__PPC__) && \
+    !defined(__powerpc64__) && !defined(__ppc64__) && !defined(__PPC64__)
 #define DENORM_USE_INTRINSICS
 #endif
 
